@@ -26,7 +26,7 @@
 
 
 void init_gpio(GpioInitStructure_AVR Gpio) {
-	if (Gpio.modo == GPIO_Output) {
+	if (Gpio.modo == GPIO_mode_Output) {
 		switch (Gpio.port) {
 // Los siguientes micros tienen GPIO A
 #if defined_AVR_PORTA
