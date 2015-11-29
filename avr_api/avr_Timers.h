@@ -1,5 +1,5 @@
 /*
- * Title: avr_Timers.h Definitions for Timers
+  * Title: avr_Timers.h Definitions for Timers
  *
  *  Created on: 8 de jul. de 2015
  *      Author: Ing. Damian Corbalan
@@ -55,18 +55,29 @@ typedef enum{
 	FastPwmTopOCR0A,
 }AVR_TIM_MODE_o;
 
-#define TimerOutADisconnected 0x0001UL
-#define TimerOutAToggle       0x0002UL
-#define TimerOutASet 	      0x0004UL
-#define TimerOutAClear 	      0x0008UL
-#define TimerOutBDisconnected 0x0010UL
-#define TimerOutBToggle       0x0020UL
-#define TimerOutBSet 	      0x0040UL
-#define TimerOutBClear 	      0x0080UL
-#define TimerOutCDisconnected 0x0100UL
-#define TimerOutCToggle       0x0200UL
-#define TimerOutCSet 	      0x0400UL
-#define TimerOutCClear        0x0800UL
+#define Normal_OC3A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
+#define Toggle_OC3A	(1<<(COM3A0))
+#define Clear_OC3A	(1<<(COM3A1))
+#define Set_OC3A	((1<<COM3A1)|(1<<(COM1A0)))
+#define Normal_OC3B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
+#define Toggle_OC3B	(1<<(COM3B0))
+#define Clear_OC3B	(1<<(COM3B1))
+#define Set_OC3B	((1<<COM3B1)|(1<<(COM3B0)))
+
+
+#define Normal_OC1A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
+#define Toggle_OC1A	(1<<(COM1A0))
+#define Clear_OC1A	(1<<(COM1A1))
+#define Set_OC1A	((1<<COM1A1)|(1<<(COM1A0)))
+#define Normal_OC1B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
+#define Toggle_OC1B	(1<<(COM1B0))
+#define Clear_OC1B	(1<<(COM1B1))
+#define Set_OC1B	((1<<COM1B1)|(1<<(COM1B0)))
+#define Normal_OC1C	0	//&~((1<<COM1C1)|(1<<(COM1C0))) no se usa
+#define Toggle_OC1C	(1<<(COM1C0))
+#define Clear_OC1C	(1<<(COM1C1))
+#define Set_OC1C	((1<<COM1C1)|(1<<(COM1C0)))
+
 
 
 

@@ -1,5 +1,5 @@
 /*
- * Title: avr_Timers.c Timers libs for AVR8
+  * Title: avr_Timers.c Timers libs for AVR8
  *  Created on: 8 de jul. de 2015
  *      Author: Ing. Damian Corbalan
  *      brief: This library can manipulate timers to do a systick interrupt, a fast pwm or
@@ -166,20 +166,41 @@ void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 
 }
 
+
 /*
- * This Function initializes the timer like a fast pwm module
- *
+  function that initializes the timer as PWM signal.
+  
+  TODO: confifuration for Timer 2 and Timer 3
  */
 void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 {
 	switch(Pwm_states.timernumber)
 		{
 #if defined_TIM0
-	case TIM0_AVR: tim0irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case TIM0_AVR:	TCNT0 = 0x00;
+					TCCR0 |= (1<< WGM00) | (1<< WGM01); // Setea al Timer 0 como Fast PWM
+					TCCR0 |= Pwm_states.ClockSource; // revisar valores de variables
+					TCCR0 |= Pwm_states.output_Type;
+					OCR0 = Pwm_states.dutyA;
+					TIMSK |= (1<<TOIE0);	  //Enable Overflow interrupt for timer 0
+					tim0irq_user_handler = (Pwm_states.timer_as_pwm) ?
+											Pwm_states.timer_as_pwm  :
+											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM1
-	case TIM1_AVR: tim1irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case TIM1_AVR:  TCNT1 = 0x00;
+					TCCR1A |=  (1<< WGM10); // Setea al Timer 0 como Fast PWM
+					TCCR1B |= (1<< WGM12);
+					TCCR1B |= Pwm_states.ClockSource; // revisar valores de variables
+					TCCR1A |= Pwm_states.output_Type;
+					OCR1A = Pwm_states.dutyA;
+					OCR1B = Pwm_states.dutyB;
+					OCR1C = Pwm_states.dutyC;
+					TIMSK |= (1<<TOIE1);	  //Enable Overflow interrupt for timer 0
+					tim1irq_user_handler = (Pwm_states.timer_as_pwm) ?
+											Pwm_states.timer_as_pwm  :
+											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM2
@@ -187,8 +208,19 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 					break;
 #endif
 #if defined_TIM3
-	case TIM3_AVR: tim3irq_user_handler = null_timer_interrupt; //generic interrupt call
-					break;
+	case TIM3_AVR: TCNT3 = 0x00;
+					TCCR3A |=  (1<< WGM30); // Setea al Timer 0 como Fast PWM
+					TCCR3B |= (1<< WGM32);
+					TCCR3B |= Pwm_states.ClockSource; // revisar valores de variables
+					TCCR3A |= Pwm_states.output_Type;
+					OCR3A = Pwm_states.dutyA;
+					OCR3B = Pwm_states.dutyB;
+					OCR3C = Pwm_states.dutyC;
+					ETIMSK |= (1<<TOIE3);	  //Enable Overflow interrupt for timer 0
+					tim3irq_user_handler = (Pwm_states.timer_as_pwm) ?
+											Pwm_states.timer_as_pwm  :
+											null_timer_interrupt; //generic interrupt call
+	break;
 #endif
 		default: break;
 		}
@@ -196,6 +228,7 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 
 
 }
+
 
 
 
@@ -253,7 +286,7 @@ static AVR_TIM_Clock_Source_o getprescaler(unsigned long ctime, unsigned char bl
 // TODO: call another type of interrupt request
 
 // Overflow interrupt Vectors
-
+/*
 #if defined_TIM0
 ISR(TIMER0_OVF_vect)
 {
@@ -261,7 +294,7 @@ ISR(TIMER0_OVF_vect)
 	(*tim0irq_user_handler)();
 }
 #endif
-
+*/
 #if defined_TIM1
 ISR(TIMER1_OVF_vect)
 {
