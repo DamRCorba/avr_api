@@ -34,47 +34,47 @@ void init_extern_interrupt(ExternalInterruptInitStructure_AVR ExternalIrq_init)
 	case avr_INT0: 	EICRA &= ~3; //limpia los valores del control para esta interrupcion
 					EICRA |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x01 :
 							 ((ExternalIrq_init.modo == avr_ext_int_fallingedge) ? 0x02 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 0x03 : 0))));
-					interrupcion_external0 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external0 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT1: 	EICRA &= ~0x0c; //limpia los valores del control para esta interrupcion
 					EICRA |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x04 :
 							 ((ExternalIrq_init.modo == avr_ext_int_fallingedge) ?  0x08 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 0x0c : 0))));
-					interrupcion_external1 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external1 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT2:
 					EICRA &= ~0x30; //limpia los valores del control para esta interrupcion
 					EICRA |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x10 :
 							 ((ExternalIrq_init.modo == avr_ext_int_fallingedge) ?  0x20 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 0x30 : 0))));
-					interrupcion_external2 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external2 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT3:
 					EICRA &= ~0xc0; //limpia los valores del control para esta interrupcion
 					EICRA |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x40 :
 							((ExternalIrq_init.modo == avr_ext_int_fallingedge) ? 0x80 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 12 : 0xc0))));
-					interrupcion_external3 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external3 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 
 	case avr_INT4:	EICRB &= ~3; //limpia los valores del control para esta interrupcion
 					EICRB |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 1 :
 							 ((ExternalIrq_init.modo == avr_ext_int_fallingedge) ? 2 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 3 : 0))));
-					interrupcion_external4 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external4 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT5:
 					EICRB &= ~0x0c; //limpia los valores del control para esta interrupcion
 					EICRB |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 4 :
 							((ExternalIrq_init.modo == avr_ext_int_fallingedge) ?  8 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 12 : 0))));
-					interrupcion_external5 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external5 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT6:	EICRB &= ~0x30; //limpia los valores del control para esta interrupcion
 					EICRB |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x10 :
 							 ((ExternalIrq_init.modo == avr_ext_int_fallingedge) ? 0x20 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 0x30 : 0))));
-					interrupcion_external6 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external6 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	case avr_INT7:
 					EICRB &= ~0xc0; //limpia los valores del control para esta interrupcion
 					EICRB |= ((ExternalIrq_init.modo == avr_ext_int_lowlevel) ? 0 : ((ExternalIrq_init.modo == avr_ext_int_anychange) ? 0x40 :
 							((ExternalIrq_init.modo == avr_ext_int_fallingedge) ?  0x80 : ((ExternalIrq_init.modo == avr_ext_int_risingedge) ? 0xc0 : 0))));
-					interrupcion_external7 = ExternalIrq_init.INTX_EXT_Handler;
+					interrupcion_external7 = ExternalIrq_init.avr_ext_interrupt_handler;
 					break;
 	default: break;
 
@@ -135,7 +135,7 @@ void init_Pcint(PcintInitStructure_AVR pcint_struct)
 	aux = (unsigned char)pcint_struct.pines & 0xff;
 	if(aux)//PCINT0
 	{
-	interrupcion_PCINT0 = pcint_struct.PCINTX_Handler; //tener cuidado en las redefiniciones de la funcion de interrupcion
+	interrupcion_PCINT0 = pcint_struct.avr_pcint_handler; //tener cuidado en las redefiniciones de la funcion de interrupcion
 	PCICR |= AVR_PCIE0;
 	PCIFR |= AVR_PCIF0;
 	PCMSK0 |= pcint_struct.pines;
@@ -143,7 +143,7 @@ void init_Pcint(PcintInitStructure_AVR pcint_struct)
 	aux = (unsigned char)((pcint_struct.pines >> 8)& 0xff);
 	if (aux) // PCINT1
 	{
-	interrupcion_PCINT1 = pcint_struct.PCINTX_Handler;
+	interrupcion_PCINT1 = pcint_struct.avr_pcint_handler;
 	PCICR |= AVR_PCIE1;
 	PCIFR |= AVR_PCIF1;
 	PCMSK1 |= pcint_struct.pines>>8;
@@ -151,7 +151,7 @@ void init_Pcint(PcintInitStructure_AVR pcint_struct)
 	aux = (unsigned char)((pcint_struct.pines >> 16)& 0xff);
 	if (aux) // PCINT2
 	{
-	interrupcion_PCINT2 = pcint_struct.PCINTX_Handler;
+	interrupcion_PCINT2 = pcint_struct.avr_pcint_handler;
 	PCICR |= AVR_PCIE2;
 	PCIFR |= AVR_PCIF2;
 	PCMSK2 |= pcint_struct.pines>>16;

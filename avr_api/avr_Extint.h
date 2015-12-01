@@ -25,6 +25,7 @@
 #define AVR_EXTINT_H_
 #include <avr/io.h>
 #include <avr/interrupt.h>
+
 //Micros con PCINT
 #define defined_AVR_PCINT defined (__AVR_ATmega328__) || (__AVR_ATmega328P__) || (__AVR_ATmega88__) || (__AVR_ATmega88P__) ||(__AVR_ATmega168__) || (__AVR_ATmega168P__) || (__AVR_ATmega48P__) || (__AVR_ATmega48__)
 
@@ -40,7 +41,7 @@ typedef enum
 	avr_INT5,
 	avr_INT6,
 	avr_INT7,
-}AVR_external_interrupt_t;
+}external_interrupt_t;
 // Interrupciones Externas
 typedef enum
 {
@@ -48,16 +49,17 @@ typedef enum
 	avr_ext_int_anychange = 1,
 	avr_ext_int_fallingedge = 2,
 	avr_ext_int_risingedge = 3,
-}AVR_external_interrupt_mode;
+}external_interrupt_mode;
 
 
 
-void (*INTX_EXT_Handler)(void);
+void (*avr_ext_interrupt_handler)(void);
+
 typedef struct
 {
-	AVR_external_interrupt_t interrupcion;	// INT0;INT1
-	AVR_external_interrupt_mode modo;		// Nivel bajo, cualquier cambio, flanco descendente, flanco ascendente
-	void (*INTX_EXT_Handler)(void);			// Funcion de atencion de interrupcion
+	external_interrupt_t interrupcion;				// INT0;INT1
+	external_interrupt_mode modo;					// Nivel bajo, cualquier cambio, flanco descendente, flanco ascendente
+	void (*avr_ext_interrupt_handler)(void);			// Funcion de atencion de interrupcion
 } ExternalInterruptInitStructure_AVR;
 
 //PCINT
@@ -68,50 +70,50 @@ typedef enum
 	AVR_PCIE1 = 1<<2,
 	AVR_PCIE2 = 1<<3,
 	AVR_PCIE3,
-}AVR_PCIE;
+}PcintE_t;
 typedef enum
 {
 	AVR_PCIF0 = 1<<1,
 	AVR_PCIF1 = 1<<2,
 	AVR_PCIF2 = 1<<3,
 	AVR_PCIF3,
-}AVR_PCIF;
+}Pcintf_t;
 
 
 	//PCMSK0
-#define	AVR_PCINT0  1
-#define AVR_PCINT1  1<<1
-#define AVR_PCINT2  1<<2
-#define AVR_PCINT3  1<<3
-#define AVR_PCINT4  1<<4
-#define AVR_PCINT5  1<<5
-#define AVR_PCINT6  1<<6
-#define AVR_PCINT7  1<<7
+#define	avr_PCINT0  1
+#define avr_PCINT1  1<<1
+#define avr_PCINT2  1<<2
+#define avr_PCINT3  1<<3
+#define avr_PCINT4  1<<4
+#define avr_PCINT5  1<<5
+#define avr_PCINT6  1<<6
+#define avr_PCINT7  1<<7
 	//PCMSK1
-#define AVR_PCINT8   0x000100UL
-#define AVR_PCINT9   0x000200UL
-#define AVR_PCINT10  0x000400UL
-#define AVR_PCINT11  0x000800UL
-#define AVR_PCINT12  0x001000UL
-#define AVR_PCINT13  0x002000UL
-#define AVR_PCINT14  0x004000UL
+#define avr_PCINT8   0x000100UL
+#define avr_PCINT9   0x000200UL
+#define avr_PCINT10  0x000400UL
+#define avr_PCINT11  0x000800UL
+#define avr_PCINT12  0x001000UL
+#define avr_PCINT13  0x002000UL
+#define avr_PCINT14  0x004000UL
 //PCMSK2
-#define AVR_PCINT16  0x010000UL
-#define AVR_PCINT17  0x020000UL
-#define AVR_PCINT18  0x040000UL
-#define AVR_PCINT19  0x080000UL
-#define AVR_PCINT20  0x100000UL
-#define AVR_PCINT21  0x200000UL
-#define AVR_PCINT22  0x400000UL
-#define AVR_PCINT23  0x800000UL
+#define avr_PCINT16  0x010000UL
+#define avr_PCINT17  0x020000UL
+#define avr_PCINT18  0x040000UL
+#define avr_PCINT19  0x080000UL
+#define avr_PCINT20  0x100000UL
+#define avr_PCINT21  0x200000UL
+#define avr_PCINT22  0x400000UL
+#define avr_PCINT23  0x800000UL
 
 #include <stdint.h>
 
-typedef unsigned long Avr_Pcint_pin_t;
-void (*PCINTX_Handler)(void);
+typedef unsigned long avr_pcint_pin_t;
+void (*avr_pcint_handler)(void);
 typedef struct{
 	Avr_Pcint_pin_t pines;
-	void (*PCINTX_Handler)(void);
+	void (*avr_pcint_handler)(void);
 }PcintInitStructure_AVR;
 
 void init_Pcint(PcintInitStructure_AVR);

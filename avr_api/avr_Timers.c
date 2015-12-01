@@ -36,7 +36,7 @@ volatile unsigned int tcnt3_value = 0;
 
 //this is a null function for non interrupt purpose
 static void null_timer_interrupt(void){}
-static AVR_TIM_Clock_Source_o getprescaler(unsigned long,unsigned char);
+static TIM_Clock_Source_o getprescaler(unsigned long,unsigned char);
 
 /*
  * This function initializes the timer in any configuration available
@@ -48,19 +48,19 @@ void init_generic_timer(TimersInitStructure_AVR generic_time)
 	switch(generic_time.timernumber)
 	{
 #if defined_TIM0
-	case TIM0_AVR: tim0irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case avr_TIM0: tim0irq_user_handler = null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM1
-	case TIM1_AVR: tim1irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case avr_TIM1: tim1irq_user_handler = null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM2
-	case TIM2_AVR: tim2irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case avr_TIM2: tim2irq_user_handler = null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM3
-	case TIM3_AVR: tim3irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case avr_TIM3: tim3irq_user_handler = null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 	default: break;
@@ -75,7 +75,7 @@ void init_generic_timer(TimersInitStructure_AVR generic_time)
  */
 void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 {
-	AVR_TIM_Clock_Source_o prescaler = AVR_TIM_Select_NoClockSource;
+	TIM_Clock_Source_o prescaler = avr_TIM_Clock_NoClockSource;
 	unsigned int prescaler_value[6] = {0, 1 , 8, 64 , 256 ,1024};
 	unsigned int pres_val[8] = {0,1,8,32,64,128,256,1024};
 
@@ -99,13 +99,13 @@ void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 	switch(Systick_data.timernumber)
 	{
 #if defined_TIM0
-	case TIM0_AVR:  prescaler = getprescaler(Systick_data.time_ms, 8);
+	case avr_TIM0:  prescaler = getprescaler(Systick_data.time_ms, 8);
 					switch(prescaler){
-					case AVR_TIM_Select_SystemClockPrescalingx64: prescaler =4;
+					case	avr_TIM_Clock_SystemClockPrescalingx64: prescaler =4;
 						break;
-					case AVR_TIM_Select_SystemClockPrescalingx256: prescaler =6;
+					case avr_TIM_Clock_SystemClockPrescalingx256: prescaler =6;
 											break;
-					case AVR_TIM_Select_SystemClockPrescalingx1024: prescaler =7;
+					case avr_TIM_Clock_SystemClockPrescalingx1024: prescaler =7;
 											break;
 					default: break;
 
@@ -116,38 +116,38 @@ void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 					Systick_in_Tim0 = 1;	  // flag to recharge TCNT value
 					tcnt0_value = 256 - (unsigned int)((float)(F_CPU * Systick_data.time_ms) / (float)(1000 * pres_val[prescaler]));
 					TCNT0 = tcnt0_value;
-					tim0irq_user_handler = (Systick_data.timer_as_Systic)?
-											Systick_data.timer_as_Systic  :
+					tim0irq_user_handler = (Systick_data.avr_systick_handler)?
+											Systick_data.avr_systick_handler  :
 											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM1
-	case TIM1_AVR: prescaler = getprescaler(Systick_data.time_ms, 16);
+	case avr_TIM1: prescaler = getprescaler(Systick_data.time_ms, 16);
 				   TCCR1A = TCCR1C = 0x00;
 				   TCCR1B = 0x00 | prescaler;
 				   Systick_in_Tim1 = 1;	  // flag to recharge TCNT value
 				   TIMSK |= (1<<TOIE1);	  //Enable Overflow interrupt for timer 1
 				   tcnt1_value = 65536 - (unsigned int)((float)(F_CPU * Systick_data.time_ms) / (float)(1000 * prescaler_value[prescaler]));
 				   TCNT1 = tcnt1_value;
-				   tim1irq_user_handler = (Systick_data.timer_as_Systic) ?
-										   Systick_data.timer_as_Systic  :
+				   tim1irq_user_handler = (Systick_data.avr_systick_handler) ?
+										   Systick_data.avr_systick_handler  :
 										   null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM2
-	case TIM2_AVR:  prescaler = getprescaler(Systick_data.time_ms, 8);
+	case avr_TIM2:  prescaler = getprescaler(Systick_data.time_ms, 8);
 					TCCR2 = 0x00 | prescaler; //Normal mode + prescaler
 					TIMSK |= (1<<TOIE2);	  //Enable Overflow interrupt for timer 0
 					Systick_in_Tim2 = 1;	  // flag to recharge TCNT value
 					tcnt2_value = 256 - (unsigned int)((float)(F_CPU * Systick_data.time_ms) / (float)(1000 * prescaler_value[prescaler]));
 					TCNT2 = tcnt3_value;
-					tim2irq_user_handler = (Systick_data.timer_as_Systic)?
-											Systick_data.timer_as_Systic  :
+					tim2irq_user_handler = (Systick_data.avr_systick_handler)?
+											Systick_data.avr_systick_handler  :
 											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM3
-	case TIM3_AVR: prescaler = getprescaler(Systick_data.time_ms, 16);
+	case avr_TIM3: prescaler = getprescaler(Systick_data.time_ms, 16);
 
 		           TCCR3A = TCCR3C = 0x00;
 				   TCCR3B = 0x00 | prescaler;
@@ -155,8 +155,8 @@ void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 			   	   ETIMSK |= (1<<TOIE3);	  //Enable Overflow interrupt for timer 1
 				   tcnt3_value = 65536 - (unsigned int)((float)(F_CPU * Systick_data.time_ms) / (float)(1000 * prescaler_value[prescaler]));
 				   TCNT3 = tcnt3_value;
-				   tim3irq_user_handler = (Systick_data.timer_as_Systic) ?
-										   Systick_data.timer_as_Systic  :
+				   tim3irq_user_handler = (Systick_data.avr_systick_handler) ?
+										   Systick_data.avr_systick_handler  :
 										   null_timer_interrupt; //generic interrupt call
 
 					break;
@@ -177,19 +177,19 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 	switch(Pwm_states.timernumber)
 		{
 #if defined_TIM0
-	case TIM0_AVR:	TCNT0 = 0x00;
+	case avr_TIM0:	TCNT0 = 0x00;
 					TCCR0 |= (1<< WGM00) | (1<< WGM01); // Setea al Timer 0 como Fast PWM
 					TCCR0 |= Pwm_states.ClockSource; // revisar valores de variables
 					TCCR0 |= Pwm_states.output_Type;
 					OCR0 = Pwm_states.dutyA;
 					TIMSK |= (1<<TOIE0);	  //Enable Overflow interrupt for timer 0
-					tim0irq_user_handler = (Pwm_states.timer_as_pwm) ?
-											Pwm_states.timer_as_pwm  :
+					tim0irq_user_handler = (Pwm_states.avr_pwm_handler) ?
+											Pwm_states.avr_pwm_handler  :
 											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM1
-	case TIM1_AVR:  TCNT1 = 0x00;
+	case avr_TIM1:  TCNT1 = 0x00;
 					TCCR1A |=  (1<< WGM10); // Setea al Timer 0 como Fast PWM
 					TCCR1B |= (1<< WGM12);
 					TCCR1B |= Pwm_states.ClockSource; // revisar valores de variables
@@ -198,17 +198,17 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 					OCR1B = Pwm_states.dutyB;
 					OCR1C = Pwm_states.dutyC;
 					TIMSK |= (1<<TOIE1);	  //Enable Overflow interrupt for timer 0
-					tim1irq_user_handler = (Pwm_states.timer_as_pwm) ?
-											Pwm_states.timer_as_pwm  :
+					tim1irq_user_handler = (Pwm_states.avr_pwm_handler) ?
+											Pwm_states.avr_pwm_handler  :
 											null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM2
-	case TIM2_AVR: tim2irq_user_handler = null_timer_interrupt; //generic interrupt call
+	case avr_TIM2: tim2irq_user_handler = null_timer_interrupt; //generic interrupt call
 					break;
 #endif
 #if defined_TIM3
-	case TIM3_AVR: TCNT3 = 0x00;
+	case avr_TIM3: TCNT3 = 0x00;
 					TCCR3A |=  (1<< WGM30); // Setea al Timer 0 como Fast PWM
 					TCCR3B |= (1<< WGM32);
 					TCCR3B |= Pwm_states.ClockSource; // revisar valores de variables
@@ -217,8 +217,8 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
 					OCR3B = Pwm_states.dutyB;
 					OCR3C = Pwm_states.dutyC;
 					ETIMSK |= (1<<TOIE3);	  //Enable Overflow interrupt for timer 0
-					tim3irq_user_handler = (Pwm_states.timer_as_pwm) ?
-											Pwm_states.timer_as_pwm  :
+					tim3irq_user_handler = (Pwm_states.avr_pwm_handler) ?
+											Pwm_states.avr_pwm_handler :
 											null_timer_interrupt; //generic interrupt call
 	break;
 #endif
@@ -253,14 +253,15 @@ void init_Fast_PWm_timer(PWMInitStructure_AVR Pwm_states)
  * tcnt = time * F_CPU / prescaler;
  *
  */
-static AVR_TIM_Clock_Source_o getprescaler(unsigned long ctime, unsigned char blength){
+static TIM_Clock_Source_o getprescaler(unsigned long ctime, unsigned char blength){
 
-	AVR_TIM_Clock_Source_o prescaler = AVR_TIM_Select_SystemClockPrescalingx1;
+	TIM_Clock_Source_o prescaler = avr_TIM_Clock_SystemClockPrescalingx1;
+
 	unsigned int prescaler_values[5] = {1 , 8, 64 , 256 ,1024};
 	unsigned int pres_val[7] = {1,8,32,64,128,256,1024};
 	unsigned char pos = 0;
 
-	for(pos = 0; pos <= AVR_TIM_Select_SystemClockPrescalingx1024; pos++){
+	for(pos = 0; pos <= avr_TIM_Clock_SystemClockPrescalingx1024; pos++){
 		if(blength == 8)
 			{
 			if((unsigned long)(0x100 * prescaler_values[pos]) >= ((ctime)*F_CPU/1000))
@@ -279,7 +280,7 @@ static AVR_TIM_Clock_Source_o getprescaler(unsigned long ctime, unsigned char bl
 		}
 
 	}
-	return AVR_TIM_Select_NoClockSource;	//If the it can select a prescaler it will return no clock
+	return avr_TIM_Clock_NoClockSource;	//If the it can select a prescaler it will return no clock
 
 }
 

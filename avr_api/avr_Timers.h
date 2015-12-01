@@ -28,98 +28,95 @@
 
 typedef enum
 {
-	TIM0_AVR = 0,
-	TIM1_AVR= 1,
-	TIM2_AVR = 2,
-	TIM3_AVR =3,
-}AVR_TIMERS_o;
+	avr_TIM0 = 0,
+	avr_TIM1= 1,
+	avr_TIM2 = 2,
+	avr_TIM3 =3,
+}TIMERS_o;
 
 
 typedef enum {
-	AVR_TIM_Select_NoClockSource = 0,
-	AVR_TIM_Select_SystemClockPrescalingx1 = 1,
-	AVR_TIM_Select_SystemClockPrescalingx8 = 2,
-	AVR_TIM_Select_SystemClockPrescalingx64 = 3,
-	AVR_TIM_Select_SystemClockPrescalingx256 = 4,
-	AVR_TIM_Select_SystemClockPrescalingx1024 = 5,
-	AVR_TIM_Select_ExternalClock_Falling = 6,
-	AVR_TIM_Select_ExternalClock_Rising = 7,
-}AVR_TIM_Clock_Source_o;
+	avr_TIM_Clock_NoClockSource = 0,
+	avr_TIM_Clock_SystemClockPrescalingx1 = 1,
+	avr_TIM_Clock_SystemClockPrescalingx8 = 2,
+	avr_TIM_Clock_SystemClockPrescalingx64 = 3,
+	avr_TIM_Clock_SystemClockPrescalingx256 = 4,
+	avr_TIM_Clock_SystemClockPrescalingx1024 = 5,
+	avr_TIM_Clock_ExternalClock_Falling = 6,
+	avr_TIM_Clock_ExternalClock_Rising = 7,
+}TIM_Clock_Source_o;
 
 typedef enum{
-	NormalTop, //top on overflow
-	PhaseCorrectPWMTop0xFF,
-	CTCTopOCR0A,
-	FastPwmTop0xFF,
-	PhaseCorrectPWMTopOCR0A,
-	FastPwmTopOCR0A,
-}AVR_TIM_MODE_o;
+	avr_TIM_MODE_NormalTop, //top on overflow
+	avr_TIM_MODE_PhaseCorrectPWMTop0xFF,
+	avr_TIM_MODE_CTCTopOCR0A,
+	avr_TIM_MODE_FastPwmTop0xFF,
+	avr_TIM_MODE_PhaseCorrectPWMTopOCR0A,
+	avr_TIM_MODE_FastPwmTopOCR0A,
+}TIM_MODE_o;
 
-#define Normal_OC3A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
-#define Toggle_OC3A	(1<<(COM3A0))
-#define Clear_OC3A	(1<<(COM3A1))
-#define Set_OC3A	((1<<COM3A1)|(1<<(COM1A0)))
-#define Normal_OC3B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
-#define Toggle_OC3B	(1<<(COM3B0))
-#define Clear_OC3B	(1<<(COM3B1))
-#define Set_OC3B	((1<<COM3B1)|(1<<(COM3B0)))
+#define avr_TIM3_Out_Normal_OC3A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
+#define avr_TIM3_Out_Toggle_OC3A	(1<<(COM3A0))
+#define avr_TIM3_Out_Clear_OC3A	(1<<(COM3A1))
+#define avr_TIM3_Out_Set_OC3A	((1<<COM3A1)|(1<<(COM1A0)))
+#define avr_TIM3_Out_Normal_OC3B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
+#define avr_TIM3_Out_Toggle_OC3B	(1<<(COM3B0))
+#define avr_TIM3_Out_Clear_OC3B	(1<<(COM3B1))
+#define avr_TIM3_Out_Set_OC3B	((1<<COM3B1)|(1<<(COM3B0)))
 
 
-#define Normal_OC1A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
-#define Toggle_OC1A	(1<<(COM1A0))
-#define Clear_OC1A	(1<<(COM1A1))
-#define Set_OC1A	((1<<COM1A1)|(1<<(COM1A0)))
-#define Normal_OC1B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
-#define Toggle_OC1B	(1<<(COM1B0))
-#define Clear_OC1B	(1<<(COM1B1))
-#define Set_OC1B	((1<<COM1B1)|(1<<(COM1B0)))
-#define Normal_OC1C	0	//&~((1<<COM1C1)|(1<<(COM1C0))) no se usa
-#define Toggle_OC1C	(1<<(COM1C0))
-#define Clear_OC1C	(1<<(COM1C1))
-#define Set_OC1C	((1<<COM1C1)|(1<<(COM1C0)))
+#define avr_TIM1_Out_Normal_OC1A	0 //~((1<<COM1A1)|(1<<(COM1A0))) // Ver como implementar 0 No se usa
+#define avr_TIM1_Out_Toggle_OC1A	(1<<(COM1A0))
+#define avr_TIM1_Out_Clear_OC1A	(1<<(COM1A1))
+#define avr_TIM1_Out_Set_OC1A	((1<<COM1A1)|(1<<(COM1A0)))
+#define avr_TIM1_Out_Normal_OC1B	0	//&~((1<<COM1B1)|(1<<(COM1B0))) no se usa
+#define avr_TIM1_Out_Toggle_OC1B	(1<<(COM1B0))
+#define avr_TIM1_Out_Clear_OC1B	(1<<(COM1B1))
+#define avr_TIM1_Out_Set_OC1B	((1<<COM1B1)|(1<<(COM1B0)))
+#define avr_TIM1_Out_Normal_OC1C	0	//&~((1<<COM1C1)|(1<<(COM1C0))) no se usa
+#define avr_TIM1_Out_Toggle_OC1C	(1<<(COM1C0))
+#define avr_TIM1_Out_Clear_OC1C	(1<<(COM1C1))
+#define avr_TIM1_Out_Set_OC1C	((1<<COM1C1)|(1<<(COM1C0)))
 
 
 
 
 typedef enum{
-	TimerOverflowIrq_avr,
-	TimerCompareMatchAIrq_avr,
-	TimerCompareMatchBIrq_avr,
-	TimerCompareMatchCIrq_avr,
-	TimerInputCampture_avr,
-}AVR_Interrupt_source_o;
+	avr_TIM_Interrupt_source_TimerOverflowIrq_avr,
+	avr_TIM_Interrupt_source_TimerCompareMatchAIrq_avr,
+	avr_TIM_Interrupt_source_TimerCompareMatchBIrq_avr,
+	avr_TIM_Interrupt_source_TimerCompareMatchCIrq_avr,
+	avr_TIM_Interrupt_source_TimerInputCampture_avr,
+}Interrupt_source_o;
 
 
-#define Tim_Handler (*timer_irq_handler)
-#define SysticHandler (*timer_as_Systic)
-#define PWM_Handler (*timer_as_pwm)
-void SysticHandler (void);
-void Tim_Handler (void);
-void PWM_Handler (void);
+void (*avr_systick_handler) (void);
+void (*timer_irq_handler) (void);
+void (*avr_pwm_handler) (void);
 
 typedef struct{
-	AVR_TIMERS_o timernumber;
-	AVR_TIM_Clock_Source_o ClockSource;
-	AVR_TIM_MODE_o TIMERMODE;
+	TIMERS_o timernumber;
+	TIM_Clock_Source_o ClockSource;
+	TIM_MODE_o TIMERMODE;
 	unsigned int   output_Type;
-	AVR_Interrupt_source_o IrqSource;
-	void Tim_Handler (void);
+	Interrupt_source_o IrqSource;
+	void (*timer_irq_handler) (void);
 }TimersInitStructure_AVR;
 
 typedef struct{
-	AVR_TIMERS_o timernumber;
+	TIMERS_o timernumber;
 	unsigned long time_ms;
-	void SysticHandler (void);
+	void (*avr_systick_handler) (void);
 }SystickInitStructure_AVR;
 
 typedef struct{
-	AVR_TIMERS_o timernumber;
-	AVR_TIM_Clock_Source_o ClockSource;
+	TIMERS_o timernumber;
+	TIM_Clock_Source_o ClockSource;
 	unsigned int   output_Type;
 	unsigned int dutyA;
 	unsigned int dutyB;
 	unsigned int dutyC;
-	void PWM_Handler (void);
+	void (*avr_pwm_handler) (void);
 }PWMInitStructure_AVR;
 
 
@@ -156,9 +153,6 @@ extern volatile bit_t systick_interrupt_flag;
 #define Systick_in_Tim1 systick_interrupt_flag.B1
 #define Systick_in_Tim2 systick_interrupt_flag.B2
 #define Systick_in_Tim3 systick_interrupt_flag.B3
-
-
-
 
 
 
