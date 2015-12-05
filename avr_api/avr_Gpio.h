@@ -94,6 +94,7 @@ typedef struct{
 
 #define avr_GPIOA_OUT PORTA
 #define avr_GPIOA_IN  PINA
+#define avr_GPIOA_DIR DDRA
 
 //PINES COMO SALIDA
 #define avr_GPIOA_OUT_0 REGBIT(avr_GPIOA_OUT,0)
@@ -115,6 +116,14 @@ typedef struct{
 #define avr_GPIOA_IN_6 REGBIT(avr_GPIOA_IN,6)
 #define avr_GPIOA_IN_7 REGBIT(avr_GPIOA_IN,7)
 
+#define avr_GPIOA_DIR_0	REGBIT(avr_GPIOA_DIR,0)
+#define avr_GPIOA_DIR_1	REGBIT(avr_GPIOA_DIR,1)
+#define avr_GPIOA_DIR_2	REGBIT(avr_GPIOA_DIR,2)
+#define avr_GPIOA_DIR_3	REGBIT(avr_GPIOA_DIR,3)
+#define avr_GPIOA_DIR_4	REGBIT(avr_GPIOA_DIR,4)
+#define avr_GPIOA_DIR_5	REGBIT(avr_GPIOA_DIR,5)
+#define avr_GPIOA_DIR_6	REGBIT(avr_GPIOA_DIR,6)
+#define avr_GPIOA_DIR_7	REGBIT(avr_GPIOA_DIR,7)
 
 #endif
 
@@ -123,6 +132,7 @@ typedef struct{
 
 #define avr_GPIOB_OUT PORTB
 #define avr_GPIOB_IN  PINB
+#define avr_GPIOB_DIR DDRB
 
 #define avr_GPIOB_OUT_0 REGBIT(avr_GPIOB_OUT,0)
 #define avr_GPIOB_OUT_1 REGBIT(avr_GPIOB_OUT,1)
@@ -142,6 +152,15 @@ typedef struct{
 #define avr_GPIOB_IN_6 REGBIT(avr_GPIOB_IN,6)
 #define avr_GPIOB_IN_7 REGBIT(avr_GPIOB_IN,7)
 
+#define avr_GPIOB_DIR_0	REGBIT(avr_GPIOB_DIR,0)
+#define avr_GPIOB_DIR_1	REGBIT(avr_GPIOB_DIR,1)
+#define avr_GPIOB_DIR_2	REGBIT(avr_GPIOB_DIR,2)
+#define avr_GPIOB_DIR_3	REGBIT(avr_GPIOB_DIR,3)
+#define avr_GPIOB_DIR_4	REGBIT(avr_GPIOB_DIR,4)
+#define avr_GPIOB_DIR_5	REGBIT(avr_GPIOB_DIR,5)
+#define avr_GPIOB_DIR_6	REGBIT(avr_GPIOB_DIR,6)
+#define avr_GPIOB_DIR_7	REGBIT(avr_GPIOB_DIR,7)
+
 #endif
 
 //Los siguientes Micros tienen Puertos C
@@ -149,6 +168,7 @@ typedef struct{
 
 #define avr_GPIOC_OUT PORTC
 #define avr_GPIOC_IN  PINC
+#define avr_GPIOC_DIR DDR
 
 #define avr_GPIOC_OUT_0 REGBIT(avr_GPIOC_OUT,0)
 #define avr_GPIOC_OUT_1 REGBIT(avr_GPIOC_OUT,1)
@@ -168,6 +188,15 @@ typedef struct{
 #define avr_GPIOC_IN_6 REGBIT(avr_GPIOC_IN,6)
 #define avr_GPIOC_IN_7 REGBIT(avr_GPIOC_IN,7)
 
+#define avr_GPIOC_DIR_0	REGBIT(avr_GPIOC_DIR,0)
+#define avr_GPIOC_DIR_1	REGBIT(avr_GPIOC_DIR,1)
+#define avr_GPIOC_DIR_2	REGBIT(avr_GPIOC_DIR,2)
+#define avr_GPIOC_DIR_3	REGBIT(avr_GPIOC_DIR,3)
+#define avr_GPIOC_DIR_4	REGBIT(avr_GPIOC_DIR,4)
+#define avr_GPIOC_DIR_5	REGBIT(avr_GPIOC_DIR,5)
+#define avr_GPIOC_DIR_6	REGBIT(avr_GPIOC_DIR,6)
+#define avr_GPIOC_DIR_7	REGBIT(avr_GPIOC_DIR,7)
+
 #endif
 
 //Los siguientes micros tienen puerto D
@@ -175,6 +204,7 @@ typedef struct{
 
 #define avr_GPIOD_OUT PORTD
 #define avr_GPIOD_IN  PIND
+#define avr_GPIOD_DIR DDRD
 
 #define avr_GPIOD_OUT_0 REGBIT(avr_GPIOD_OUT,0)
 #define avr_GPIOD_OUT_1 REGBIT(avr_GPIOD_OUT,1)
@@ -194,6 +224,15 @@ typedef struct{
 #define avr_GPIOD_IN_6 REGBIT(avr_GPIOD_IN,6)
 #define avr_GPIOD_IN_7 REGBIT(avr_GPIOD_IN,7)
 
+#define avr_GPIOD_DIR_0	REGBIT(avr_GPIOD_DIR,0)
+#define avr_GPIOD_DIR_1	REGBIT(avr_GPIOD_DIR,1)
+#define avr_GPIOD_DIR_2	REGBIT(avr_GPIOD_DIR,2)
+#define avr_GPIOD_DIR_3	REGBIT(avr_GPIOD_DIR,3)
+#define avr_GPIOD_DIR_4	REGBIT(avr_GPIOD_DIR,4)
+#define avr_GPIOD_DIR_5	REGBIT(avr_GPIOD_DIR,5)
+#define avr_GPIOD_DIR_6	REGBIT(avr_GPIOD_DIR,6)
+#define avr_GPIOD_DIR_7	REGBIT(avr_GPIOD_DIR,7)
+
 #endif
 
 
@@ -202,6 +241,7 @@ typedef struct{
 
 #define avr_GPIOE_OUT PORTE
 #define avr_GPIOE_IN  PINE
+#define avr_GPIOE_DIR DDRE
 
 #define avr_GPIOE_OUT_0 REGBIT(avr_GPIOE_OUT,0)
 #define avr_GPIOE_OUT_1 REGBIT(avr_GPIOE_OUT,1)
@@ -221,6 +261,15 @@ typedef struct{
 #define avr_GPIOE_IN_6 REGBIT(avr_GPIOE_IN,6)
 #define avr_GPIOE_IN_7 REGBIT(avr_GPIOE_IN,7)
 
+#define avr_GPIOE_DIR_0	REGBIT(avr_GPIOE_DIR,0)
+#define avr_GPIOE_DIR_1	REGBIT(avr_GPIOE_DIR,1)
+#define avr_GPIOE_DIR_2	REGBIT(avr_GPIOE_DIR,2)
+#define avr_GPIOE_DIR_3	REGBIT(avr_GPIOE_DIR,3)
+#define avr_GPIOE_DIR_4	REGBIT(avr_GPIOE_DIR,4)
+#define avr_GPIOE_DIR_5	REGBIT(avr_GPIOE_DIR,5)
+#define avr_GPIOE_DIR_6	REGBIT(avr_GPIOE_DIR,6)
+#define avr_GPIOE_DIR_7	REGBIT(avr_GPIOE_DIR,7)
+
 #endif
 
 //Los siguientes micros tienen Puerto F
@@ -228,6 +277,7 @@ typedef struct{
 
 #define avr_GPIOF_OUT PORTF
 #define avr_GPIOF_IN  PINF
+#define avr_GPIOF_DIR DDRF
 
 #define avr_GPIOF_OUT_0 REGBIT(avr_GPIOF_OUT,0)
 #define avr_GPIOF_OUT_1 REGBIT(avr_GPIOF_OUT,1)
@@ -246,6 +296,16 @@ typedef struct{
 #define avr_GPIOF_IN_5 REGBIT(avr_GPIOF_IN,5)
 #define avr_GPIOF_IN_6 REGBIT(avr_GPIOF_IN,6)
 #define avr_GPIOF_IN_7 REGBIT(avr_GPIOF_IN,7)
+
+#define avr_GPIOF_DIR_0	REGBIT(avr_GPIOF_DIR,0)
+#define avr_GPIOF_DIR_1	REGBIT(avr_GPIOF_DIR,1)
+#define avr_GPIOF_DIR_2	REGBIT(avr_GPIOF_DIR,2)
+#define avr_GPIOF_DIR_3	REGBIT(avr_GPIOF_DIR,3)
+#define avr_GPIOF_DIR_4	REGBIT(avr_GPIOF_DIR,4)
+#define avr_GPIOF_DIR_5	REGBIT(avr_GPIOF_DIR,5)
+#define avr_GPIOF_DIR_6	REGBIT(avr_GPIOF_DIR,6)
+#define avr_GPIOF_DIR_7	REGBIT(avr_GPIOF_DIR,7)
+
 #endif
 
 //Los siguientes micros tienen puerto G
@@ -253,6 +313,7 @@ typedef struct{
 
 #define avr_GPIOG_OUT PORTG
 #define avr_GPIOG_IN  PING
+#define avr_GPIOG_DIR DDRG
 
 #define avr_GPIOG_OUT_0 REGBIT(avr_GPIOG_OUT,0)
 #define avr_GPIOG_OUT_1 REGBIT(avr_GPIOG_OUT,1)
@@ -271,6 +332,15 @@ typedef struct{
 #define avr_GPIOG_IN_5 REGBIT(avr_GPIOG_IN,5)
 #define avr_GPIOG_IN_6 REGBIT(avr_GPIOG_IN,6)
 #define avr_GPIOG_IN_7 REGBIT(avr_GPIOG_IN,7)
+
+#define avr_GPIOG_DIR_0	REGBIT(avr_GPIOG_DIR,0)
+#define avr_GPIOG_DIR_1	REGBIT(avr_GPIOG_DIR,1)
+#define avr_GPIOG_DIR_2	REGBIT(avr_GPIOG_DIR,2)
+#define avr_GPIOG_DIR_3	REGBIT(avr_GPIOG_DIR,3)
+#define avr_GPIOG_DIR_4	REGBIT(avr_GPIOG_DIR,4)
+#define avr_GPIOG_DIR_5	REGBIT(avr_GPIOG_DIR,5)
+#define avr_GPIOG_DIR_6	REGBIT(avr_GPIOG_DIR,6)
+#define avr_GPIOG_DIR_7	REGBIT(avr_GPIOG_DIR,7)
 
 #endif
 

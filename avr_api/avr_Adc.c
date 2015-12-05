@@ -1,5 +1,5 @@
 /*
- * Title: avr_Adc.c
+  * Title: avr_Adc.c
  *
  *  Created on: 8 de jul. de 2015
  *      Author: Ing. Damian Corbalan
@@ -29,27 +29,30 @@
 
 void null_adc_irq(void) {
 }
-static ADC_RES_t resolucion_ADC = ADC_10Bit_RES; // valor por defecto
+
+static ADC_RES_t avr_resolucion_ADC = avr_ADC_RES_10Bit; // valor por defecto
 
 /*
  *  leer_ADC
  *  Parametro: Numero de canal a convertir.
  *  Devuelve el valor en 10 bit de resulucion de la cuenta.
  */
-ADC_Value_AVR_t leer_ADC(CANAL_ADC canal) {
+avr_ADC_Value_t leer_ADC(ADC_CANAL_t canal) {
 	int valor = 0;
-	set_ADC_Channel(canal);			//Selecciona el canal
-	comienzo_conversion();			// Empieza la conversion
-	if (resolucion_ADC == ADC_10Bit_RES) {
+
+	avr_ADC_set_Channel(canal);//Selecciona el canal
+
+	avr_ADC_comienzo_conversion();			// Empieza la conversion
+	if (avr_resolucion_ADC == avr_ADC_RES_10Bit) {
 		while (!(ADCSRA & (1 << ADIF)))
 			;	//Espera hasta que la conversion este terminada
-		valor = ADC_RETURN_10BIT_RES;
+		valor = avr_ADC_RETURN_10BIT_RES;
 
 	}
-	if (resolucion_ADC == ADC_8Bit_RES) {
+	if (avr_resolucion_ADC == avr_ADC_RES_8Bit) {
 		while (!(ADCSRA & (1 << ADIF)))
 			;	//Espera hasta que la conversion este terminada
-		valor = ADC_RETURN_8BIT_RES;	//Devuelve el valor convertido
+		valor = avr_ADC_RETURN_8BIT_RES;	//Devuelve el valor convertido
 	}
 	return valor;	//Devuelve el valor convertido
 }
@@ -72,49 +75,47 @@ ADC_ERROR init_adc(AdcInitStructure_AVR ADC_init)			//Inicializa ADC
 {
 
 	ADCSRA = 0x00;
-	if (ADC_init.prescaler > ADC_Prescaler_128)	//Si el prescales seleccionado es mayor que el maximo posible devuelve error
-		return ADC_ERR;
+	if (ADC_init.prescaler > avr_ADC_Prescaler_128)	//Si el prescales seleccionado es mayor que el maximo posible devuelve error
+		return avr_ADC_ERR;
 	ADCSRA |= ADC_init.prescaler;		//Configura el prescaler
 	switch (ADC_init.mode) {
-	case ADC_freerunning:
+	case avr_ADC_MODE_Freerunning:
 		ADCSRA |= (1 << ADEN); //Habilita el ADC
 		ADCSRA |= (1 << ADFR); //Configura el modo Freerunning
 		ADCSRA |= (1 << ADIE); //Habilita la interrupcion de fin de conversion
-		set_ADC_Channel(ADC_init.channel)
-		;
-		comienzo_conversion();	//Comienza la conversion
-		interrupcion_adc = ADC_init.avr_adc_irq;
+		avr_ADC_set_Channel(ADC_init.channel);
+		avr_ADC_comienzo_conversion();	//Comienza la conversion
+		avr_adc_handler = ADC_init.avr_adc_handler;
 		break;
-	case ADC_Single_Conversion:
+	case avr_ADC_MODE_Single_Conversion:
 		ADCSRA |= (1 << ADEN); //Habilita el ADC para el modo Single Conversion
-		interrupcion_adc = null_adc_irq;
+		avr_adc_handler = null_adc_irq;
 		break;
-	case ADC_interrupt_request:
+	case avr_ADC_MODE_Interrupt_request:
 		ADCSRA |= (1 << ADEN); //Habilita el ADC
 		ADCSRA |= (1 << ADIE); //Habilita la interrupcion de fin de conversion
-		set_ADC_Channel(ADC_init.channel)
-		;
-		comienzo_conversion();	//Comienza la conversion
-		interrupcion_adc = ADC_init.avr_adc_irq; //Inicializa el puntero de lectura
+		avr_ADC_set_Channel(ADC_init.channel);
+		avr_ADC_comienzo_conversion();	//Comienza la conversion
+		avr_adc_handler = ADC_init.avr_adc_handler; //Inicializa el puntero de lectura
 		break;
 	default:
-		return ADC_ERR;		//Caso de error de configuracion
+		return avr_ADC_ERR;		//Caso de error de configuracion
 	}
-	if (ADC_init.resolution == ADC_8Bit_RES) {
+	if (ADC_init.resolution == avr_ADC_RES_8Bit) {
 		ADMUX |= (1 << ADLAR);
 	} //Acomoda a la izquierda para conversion de 8 bits
-	resolucion_ADC = ADC_init.resolution;
+	avr_resolucion_ADC = ADC_init.resolution;
 	ADMUX &= ~ ((1<<REFS1)|(1<<REFS0)); // pone la referencia por defecto como AREF
-	if(ADC_init.reference == AVR_AVcc)
+	if(ADC_init.reference == avr_ADC_REF_AVcc)
 		ADMUX |= (1<<REFS0);
-	if(ADC_init.reference == AVR_Internal)
+	if(ADC_init.reference == avr_ADC_REF_Internal)
 		ADMUX |= ((1<<REFS1)|(1<<REFS0));
-	return ADC_OK;			//Configuracion exitosa
+	return avr_ADC_OK;			//Configuracion exitosa
 }
 
 // Llamado de interrupcion del micro para fin de conversion.
 ISR(ADC_vect) {
-	(*interrupcion_adc)();//Dependiendo el modo de funcionamiento usara una rutina diferente en la interrupcion
+	(*avr_adc_handler)();//Dependiendo el modo de funcionamiento usara una rutina diferente en la interrupcion
 }
 
 

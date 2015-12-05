@@ -33,70 +33,70 @@
 /* *********************** Definiciones de ADC ************************ */
 typedef enum			//Definiciones de canales de ADC
 {
-	ADC_canal0 = 0,	//ADC0
-	ADC_canal1,		//ADC1
-	ADC_canal2,		//ADC2
-	ADC_canal3,		//ADC3
-	ADC_canal4,		//ADC4
-	ADC_canal5,		//ADC5
-	ADC_canal6,		//ADC6
-	ADC_canal7,		//ADC7
-}CANAL_ADC;
+	avr_ADC_canal0 = 0,	//ADC0
+	avr_ADC_canal1 = 1,		//ADC1
+	avr_ADC_canal2 = 2,		//ADC2
+	avr_ADC_canal3 = 3,		//ADC3
+	avr_ADC_canal4 = 4,		//ADC4
+	avr_ADC_canal5 = 5,		//ADC5
+	avr_ADC_canal6 = 6,		//ADC6
+	avr_ADC_canal7 = 7,		//ADC7
+}ADC_CANAL_t;
 
 typedef enum				//Prescaler para ADC
 {
-	ADC_Prescaler_2 = 1,		//(1) -> Clock MCU /2
-	ADC_Prescaler_4,			//(2) -> Clock MCU /4
-	ADC_Prescaler_8,			//(3) -> Clock MCU /8
-	ADC_Prescaler_16,			//(4) -> Clock MCU /16
-	ADC_Prescaler_32,			//(5) -> Clock MCU /32
-	ADC_Prescaler_64,			//(6) -> Clock MCU /64
-	ADC_Prescaler_128,			//(7) -> Clock MCU /128
-}PRES_ADC;
+	avr_ADC_Prescaler_2 = 1,		//(1) -> Clock MCU /2
+	avr_ADC_Prescaler_4,			//(2) -> Clock MCU /4
+	avr_ADC_Prescaler_8,			//(3) -> Clock MCU /8
+	avr_ADC_Prescaler_16,			//(4) -> Clock MCU /16
+	avr_ADC_Prescaler_32,			//(5) -> Clock MCU /32
+	avr_ADC_Prescaler_64,			//(6) -> Clock MCU /64
+	avr_ADC_Prescaler_128,			//(7) -> Clock MCU /128
+}ADC_PRES_t;
 
 typedef enum		//Modos de funcionamiento
 {
-	ADC_freerunning,			//Convierte siempre y continuamente
-	ADC_Single_Conversion,		//Una Sola Conversion
-	ADC_interrupt_request,		//Habilita para convertir continuamente y con salto de interrupcion
-}MODE_ADC;
+	avr_ADC_MODE_Freerunning,			//Convierte siempre y continuamente
+	avr_ADC_MODE_Single_Conversion,		//Una Sola Conversion
+	avr_ADC_MODE_Interrupt_request,		//Habilita para convertir continuamente y con salto de interrupcion
+}ADC_MODE_t;
 
 typedef enum
 {
-	ADC_8Bit_RES,
-	ADC_10Bit_RES,
+	avr_ADC_RES_8Bit,
+	avr_ADC_RES_10Bit,
 }ADC_RES_t;
 
 typedef enum		//Mensajes de error del ADC
 {
-	ADC_ERR = 0,
-	ADC_OK,
+	avr_ADC_ERR = 0,
+	avr_ADC_OK,
 }ADC_ERROR;
 
 typedef enum
 {
-	AVR_AREF = 0,
-	AVR_AVcc = 1,
-	AVR_Internal = 3,
+	avr_ADC_REF_AREF = 0,
+	avr_ADC_REF_AVcc = 1,
+	avr_ADC_REF_Internal = 3,
 }ADC_REF_t;
 /* *********************** MACROS para manejo de ADC ************************ */
 //Macros generales
-#define set_ADC_Channel(canal)	ADMUX&=0xE0;ADMUX|=(CANAL_ADC)canal	//seleccion de canal
-#define comienzo_conversion()	ADCSRA|=1<<ADSC
-#define adc_handler (*avr_adc_irq)
-void (*interrupcion_adc)(void);
+#define avr_ADC_set_Channel(canal)	    ADMUX&=0xE0;ADMUX|=(ADC_CANAL_t)canal	//seleccion de canal
+#define avr_ADC_comienzo_conversion()	ADCSRA|=1<<ADSC
+
+void (*avr_adc_handler)(void);
 
 typedef struct
 {
-	MODE_ADC mode;
-	PRES_ADC prescaler;
-	CANAL_ADC channel ;
+	ADC_MODE_t mode;
+	ADC_PRES_t prescaler;
+	ADC_CANAL_t channel ;
 	ADC_RES_t resolution;
 	ADC_REF_t reference;
-	void adc_handler(void);
+	void (*avr_adc_handler)(void);
 }AdcInitStructure_AVR;
 
-typedef unsigned int ADC_Value_AVR_t;
+typedef unsigned int avr_ADC_Value_t;
 
 /* *********************** Funciones para manejo de ADC ************************ */
 
@@ -125,7 +125,7 @@ ADC_ERROR init_adc(AdcInitStructure_AVR ADC_init);			    //Inicializa ADC, MODO,
  *  Parametro: Numero de canal a convertir.
  *  Devuelve el valor en 10 bit de resulucion de la cuenta.
  */
-ADC_Value_AVR_t leer_ADC(CANAL_ADC);										//Lee el canal pedido, modo single conversion
+avr_ADC_Value_t leer_ADC(ADC_CANAL_t canal);										//Lee el canal pedido, modo single conversion
 
 /*
  * Funcion de interrupcion para modo Interrupt o Freerunning
@@ -133,8 +133,8 @@ ADC_Value_AVR_t leer_ADC(CANAL_ADC);										//Lee el canal pedido, modo single
  */
 
 
-#define ADC_RETURN_8BIT_RES (unsigned char)ADCH
-#define ADC_RETURN_10BIT_RES  ADCL | (ADCH<<8)
+#define avr_ADC_RETURN_8BIT_RES (unsigned char)ADCH
+#define avr_ADC_RETURN_10BIT_RES  ADCL | (ADCH<<8)
 
 
 

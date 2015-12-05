@@ -33,7 +33,8 @@
 /***********************************************************************************************/
 /***********************************************************************************************/
 // Macro y variable General para manejo de a bit.
-typedef struct{
+typedef struct
+	{
 	unsigned char B0:1;
 	unsigned char B1:1;
 	unsigned char B2:1;
@@ -42,9 +43,9 @@ typedef struct{
 	unsigned char B5:1;
 	unsigned char B6:1;
 	unsigned char B7:1;
-}bit_t;
+	}bit_t;
 
-#define REGBIT(reg,bit)		((volatile bit_t*)&reg)->B##bit	//Macro para manejar registros de a bit
+#define REGBIT(reg,bt)	((volatile bit_t*)&reg)->B##bt	//MACRO PARA MANEJAR REGISTROS DE A BIT.
 /***********************************************************************************************/
 /***********************************************************************************************/
 // Librerias de perifericos. Comentar la que no se use.
