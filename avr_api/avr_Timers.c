@@ -140,7 +140,7 @@ void init_Systick_timer(SystickInitStructure_AVR Systick_data)
 					TIMSK |= (1<<TOIE2);	  //Enable Overflow interrupt for timer 0
 					Systick_in_Tim2 = 1;	  // flag to recharge TCNT value
 					tcnt2_value = 256 - (unsigned int)((float)(F_CPU * Systick_data.time_ms) / (float)(1000 * prescaler_value[prescaler]));
-					TCNT2 = tcnt3_value;
+					TCNT2 = tcnt2_value;
 					tim2irq_user_handler = (Systick_data.avr_systick_handler)?
 											Systick_data.avr_systick_handler  :
 											null_timer_interrupt; //generic interrupt call
@@ -287,7 +287,7 @@ static TIM_Clock_Source_o getprescaler(unsigned long ctime, unsigned char blengt
 // TODO: call another type of interrupt request
 
 // Overflow interrupt Vectors
-/*
+
 #if defined_TIM0
 ISR(TIMER0_OVF_vect)
 {
@@ -295,7 +295,7 @@ ISR(TIMER0_OVF_vect)
 	(*tim0irq_user_handler)();
 }
 #endif
-*/
+
 #if defined_TIM1
 ISR(TIMER1_OVF_vect)
 {
