@@ -5,11 +5,11 @@ El presente proyecto es una API para el microcontrolador Atmega128 de ATMEL.
 
 El API esta escrito siguendo el modelo CMSIS para hacerlo mas familiar.
 
-# GPIO
+## GPIO
 
 Para la configuracion de puertos la API provee varios elementos.
 
-void init_gpio(GpioInitStructure_AVR Gpio);
+### void init_gpio(GpioInitStructure_AVR Gpio);
 
 inicializa al puerto utilizando la Estructura.
 
@@ -22,8 +22,8 @@ typedef struct
 
 Una vez configurado el puerto, se lo puede usar con:
 
-set_pin(avr_GPIO_A,0)
-clear_pin(avr_GPIO_A,0)
+#### set_pin(avr_GPIO_A,0)
+#### clear_pin(avr_GPIO_A,0)
 
 o bien con macros resueltas
 
@@ -41,4 +41,4 @@ avr_GPIOA_IN
 Incluso se puede cambiar la direccion utilizando
 avr_GPIOA_DIR
 
-Nota: El ejemplo de arriba es valido para el puerto A, Para el resto de los puertos reemplazar A por la letra corresponiente al puerto.
+*Nota: El ejemplo de arriba es valido para el puerto A, Para el resto de los puertos reemplazar A por la letra corresponiente al puerto.*
