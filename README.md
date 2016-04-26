@@ -22,23 +22,23 @@ typedef struct
 
 Una vez configurado el puerto, se lo puede usar con:
 
-#### set_pin(avr_GPIO_A,0)
-#### clear_pin(avr_GPIO_A,0)
+ **set_pin(avr_GPIO_A,0)**
+ **clear_pin(avr_GPIO_A,0)**
 
 o bien con macros resueltas
 
-avr_GPIOA_OUT_0 = 1; //set
-avr_GPIOA_OUT_0 = 0; //clear
+**avr_GPIOA_OUT_0** = 1; //set
+**avr_GPIOA_OUT_0** = 0; //clear
 
 Para leer los puertos
-avr_GPIOA_IN_0
+**avr_GPIOA_IN_0**
 
 Si quiero leer el o escribir el puerto completo en lugar de a bit.
 
-avr_GPIOA_OUT
-avr_GPIOA_IN
+**avr_GPIOA_OUT
+avr_GPIOA_IN**
 
 Incluso se puede cambiar la direccion utilizando
-avr_GPIOA_DIR
+**avr_GPIOA_DIR**
 
 *Nota: El ejemplo de arriba es valido para el puerto A, Para el resto de los puertos reemplazar A por la letra corresponiente al puerto.*
