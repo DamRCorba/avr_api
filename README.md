@@ -12,14 +12,14 @@ Para la configuracion de puertos la API provee varios elementos.
 ### void init_gpio(GpioInitStructure_AVR Gpio);
 
 inicializa al puerto utilizando la Estructura.
-
+```
 typedef struct
 {
 	GPIO_PORT port; // ejemplo - avr_GPIO_A
 	GPIO_MODE modo; // avr_GPIO_mode_Input - avr_GPIO_mode_Output
 	unsigned char pines; // avr_GPIO_PIN_0 | avr_GPIO_PIN_1
 }GpioInitStructure_AVR;
-
+```
 Una vez configurado el puerto, se lo puede usar con:
 
  **set_pin(avr_GPIO_A,0)**
@@ -65,9 +65,8 @@ typedef struct
 los modos de interrupcion son:
 
 ```
-  avr_ext_int_lowlevel
-	avr_ext_int_anychange
-	avr_ext_int_fallingedge
-	avr_ext_int_risingedge
-
+avr_ext_int_lowlevel
+avr_ext_int_anychange
+avr_ext_int_fallingedge
+avr_ext_int_risingedge
 ```
