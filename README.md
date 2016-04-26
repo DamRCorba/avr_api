@@ -1,4 +1,4 @@
-# avr_api
+# AVR API
 Avr Api para ATmega128
 
 El presente proyecto es una API para el microcontrolador Atmega128 de ATMEL.
@@ -23,6 +23,7 @@ typedef struct
 Una vez configurado el puerto, se lo puede usar con:
 
  **set_pin(avr_GPIO_A,0)**
+
  **clear_pin(avr_GPIO_A,0)**
 
 o bien con macros resueltas
@@ -70,3 +71,9 @@ avr_ext_int_anychange
 avr_ext_int_fallingedge
 avr_ext_int_risingedge
 ```
+
+## TIMERS
+Los *Timers* son sin duda los perifericos mas versatilez de los microcontroladores, la api permite utilizarlos como **Systick** y como **FastPwm**
+
+## ADC
+El conversor analogico digital puede ser utilizado tanto con una funcion bloqueante como con interrupciones, para ellos la api facilita las siguientes funciones de configuracion.
