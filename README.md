@@ -75,5 +75,47 @@ avr_ext_int_risingedge
 ## TIMERS
 Los *Timers* son sin duda los perifericos mas versatilez de los microcontroladores, la api permite utilizarlos como **Systick** y como **FastPwm**
 
+Para usar a un Timer como Systick se utiliza la funcion
+
+### void init_Systick_timer(SystickInitStructure_AVR);
+
+La estructura de configuración es:
+
+```
+typedef struct{
+	TIMERS_o timernumber;
+	unsigned long time_ms;
+	void (*avr_systick_handler) (void);
+}SystickInitStructure_AVR;
+```
+Donde:
+timernumber: avr_TIM0, avr_TIM1, avr_TIM2 o avr_TIM3
+time_ms: Tiempo en milisegundos.
+avr_systick_handler: puntero a funcion de interrupción.
+
+Para usar PWM
+
+### void init_Fast_Pwm_timer(PWMInitStructure_AVR);
+
+Esta estructura es un poco mas compleja.
+
+```
+typedef struct{
+	TIMERS_o timernumber;
+	TIM_Clock_Source_o ClockSource;
+	unsigned int output_type;
+	unsigned int dutyA;
+	unsigned int dutyB;
+	unsigned int dutyC;
+	void (*avr_pwm_handler) (void);
+}PWMInitStructure_AVR;
+```
+Donde:
+timernumber: avr_TIM0, avr_TIM1, avr_TIM2 o avr_TIM3
+ClockSource: Fuente de clock / Prescaler
+output_type: comportamiento de los pines de salida
+dutyX: Ciclo de actividad de cada señal de PWM
+avr_pwm_handler: Puntero a funcion para la rutina de interrupcion del overflow.
+
 ## ADC
 El conversor analogico digital puede ser utilizado tanto con una funcion bloqueante como con interrupciones, para ellos la api facilita las siguientes funciones de configuracion.
