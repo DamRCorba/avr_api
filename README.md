@@ -118,4 +118,125 @@ dutyX: Ciclo de actividad de cada señal de PWM
 avr_pwm_handler: Puntero a funcion para la rutina de interrupcion del overflow.
 
 ## ADC
-El conversor analogico digital puede ser utilizado tanto con una funcion bloqueante como con interrupciones, para ellos la api facilita las siguientes funciones de configuracion.
+El conversor analogico digital puede ser utilizado tanto con una funcion bloqueante como con interrupciones, para ellos la api facilita las siguientes funciones de configuracion y uso:
+
+### ADC_ERROR init_adc(AdcInitStructure_AVR ADC_init);
+
+ADC_ERROR podra ser error o Exito.
+
+
+La Estructura de configuracion del ADC se compone por
+```
+typedef struct
+{
+	ADC_MODE_t mode;
+	ADC_PRES_t prescaler;
+	ADC_CANAL_t channel ;
+	ADC_RES_t resolution;
+	ADC_REF_t reference;
+	void (*avr_adc_handler)(void);
+}AdcInitStructure_AVR;
+```
+
+Donde:
+```
+mode: 	
+	avr_ADC_MODE_Freerunning,		//Convierte siempre y continuamente
+	avr_ADC_MODE_Single_Conversion,		//Una Sola Conversion
+	avr_ADC_MODE_Interrupt_request,		//Habilita para conve
+```
+```
+prescaler:
+	avr_ADC_Prescaler_2 = 1,		//(1) -> Clock MCU /2
+	avr_ADC_Prescaler_4,			//(2) -> Clock MCU /4
+	avr_ADC_Prescaler_8,			//(3) -> Clock MCU /8
+	avr_ADC_Prescaler_16,			//(4) -> Clock MCU /16
+	avr_ADC_Prescaler_32,			//(5) -> Clock MCU /32
+	avr_ADC_Prescaler_64,			//(6) -> Clock MCU /64
+	avr_ADC_Prescaler_128,			//(7) -> Clock MCU /128
+```
+```
+channel:
+	avr_ADC_canal0 = 0,		//ADC0
+	avr_ADC_canal1 = 1,		//ADC1
+	avr_ADC_canal2 = 2,		//ADC2
+	avr_ADC_canal3 = 3,		//ADC3
+	avr_ADC_canal4 = 4,		//ADC4
+	avr_ADC_canal5 = 5,		//ADC5
+	avr_ADC_canal6 = 6,		//ADC6
+	avr_ADC_canal7 = 7,		//ADC7
+```
+```
+resolution:
+	avr_ADC_RES_8Bit,
+	avr_ADC_RES_10Bit,
+```
+```
+reference:
+	avr_ADC_REF_AREF = 0,
+	avr_ADC_REF_AVcc = 1,
+	avr_ADC_REF_Internal = 3,
+```
+```
+avr_adc_handler:
+		Es la funcion que quiero que se ejecute con el fin de conversion
+```
+
+El Valor de la conversion se obtiene por medio de las macros:
+
+#### avr_ADC_RETURN_8BIT_RES 
+
+#### avr_ADC_RETURN_10BIT_RES
+
+Finalmente si queremos utilizar al ADC sin interrupciones y con su funcion bloqueante usaremos:
+
+### avr_ADC_Value_t leer_ADC(ADC_CANAL_t canal);									
+
+Solo se le da el canal a convertir y devolvera el valor convertido, esta funcion es bloqueante y la resolucion, referencia y clock del ADC dependera de la funcion init_adc.
+
+
+## UART
+
+Las libreias UART de la api son las libreias creadas por Peter Fleury con un agregado para manejarlas con el mismo formato de la API.
+
+### void init_uart_avr(UartInitStructure);
+
+La estructura esta formada por:
+
+```
+typedef struct
+{
+	unsigned int baudrate;
+	uarts_t uart_port;
+}UartInitStructure;
+```
+donde el baudrate se expresa en valor numerico(9600 por ejemplo).
+Y uart_port puede ser avr_UART0 o avr_UART1.
+
+Dentro de las librerias de Peter Fleury disponemos de varias funciones para leer y escribir el puerto. Las mas destacadas son:
+
+### unsigned int uart_getc(void);
+Lee un caracter recibido en el puerto UART0
+
+### void uart_putc(unsigned char data);
+Escribe un caracter en el puerto UART0
+
+### void uart_puts(const char *s );
+Escribe una cadena de caracteres en el puerto UART0
+
+### unsigned int uart1_getc(void);
+Lee un caracter recibido en el puerto UART1
+
+### void uart1_putc(unsigned char data);
+Escribe un caracter en el puerto UART1
+
+### void uart1_puts(const char *s );
+Escribe una cadena de caracteres en el puerto UART1
+
+
+Para mas informacion sobre las libreias de Peter Fleury. Visite el sitio del autor
+Peter Fleury pfleury@gmx.ch  http://jump.to/fleury
+
+
+
+

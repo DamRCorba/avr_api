@@ -688,6 +688,24 @@ void uart1_puts_p(const char *progmem_s )
 }/* uart1_puts_p */
 
 
+/**************************************************************************
+ * Function : init_uart_avr
+ * Purpose: Inicializar el puerto UART con el formato de la API
+ * Input: Estuctura de configuracion, baudrate y Puerto
+ * return: None
+ * Autor: Damian Corbalan
+ **************************************************************************/
+ void init_uart_avr(UartInitStructure portdata){
+	if(portdata.uart_port == avr_uart0)
+	{
+		uart_init(UART_BAUD_SELECT(portdata.baudrate,F_CPU));
+	}
+	else
+	{
+		uart1_init(UART_BAUD_SELECT(portdata.baudrate,F_CPU));
+	}
+
+ }
 #endif
 
 

@@ -193,6 +193,24 @@ extern void uart1_puts_p(const char *s );
 
 /**@}*/
 
+/* Definiciones de Homologacion a avr_api*/
+//Puertos Uart Disponibles
+typedef enum
+{
+	avr_uart0,
+	avr_uart1,
+}uarts_t;
+
+// Estructura de configuracion
+typedef struct
+{
+	unsigned int baudrate;
+	uarts_t uart_port;
+}UartInitStructure;
+
+// Funcion de inicializacion
+void init_uart_avr(UartInitStructure);
+
 
 
 #endif /* AVR_UART_H_ */
