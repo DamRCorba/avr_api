@@ -184,9 +184,9 @@ avr_adc_handler:
 
 El Valor de la conversion se obtiene por medio de las macros:
 
-#### avr_ADC_RETURN_8BIT_RES 
+**avr_ADC_RETURN_8BIT_RES**
 
-#### avr_ADC_RETURN_10BIT_RES
+**avr_ADC_RETURN_10BIT_RES**
 
 Finalmente si queremos utilizar al ADC sin interrupciones y con su funcion bloqueante usaremos:
 
